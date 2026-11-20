@@ -1,0 +1,21 @@
+sequenceDiagram
+  autonumber
+  actor User as Usuario
+  participant UI as UI (React / Konva)
+  participant Store as Store (Zustand)
+  participant Scheduler as Scheduler (Tiles)
+  participant Worker as Web Worker (Comlink)
+  participant QT as QuadTree (physics-core)
+  participant RT as RayTracer (Direct / Fresnel)
+  participant Canvas as Visor Canvas / WebGL
+
+  User->>UI: Arrastra router en el plano
+  UI->>Store: Actualiza posición router (inmutable)
+  Store->>Scheduler: Notifica cambio de escena + generationId
+  Scheduler->>Worker: Envia tiles (refinamiento progresivo: 1m -> 0.5m -> 0.25m)
+  Worker->>QT: Consulta muros intersecados en segmento TX -> RX
+  QT-->>Worker: Retorna lista deduplicada de muros
+  Worker->>RT: Calcula pérdidas FSPL + Atenuación angular + Reflexiones
+  RT-->>Worker: RSSI celda (dBm)
+  Worker-->>Scheduler: Tile completado (Float32Array)
+  Scheduler->>Canvas: Renderiza mapa de calor en viewport

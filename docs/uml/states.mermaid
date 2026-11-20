@@ -1,0 +1,21 @@
+stateDiagram-v2
+  [*] --> Seleccionar
+
+  state EditorTools {
+    Seleccionar --> DibujarMuro: Tecla W / Botón
+    DibujarMuro --> Seleccionar: Escape / Finalizar segmento
+    Seleccionar --> ColocarPuerta: Tecla D / Botón
+    ColocarPuerta --> Seleccionar: Clic en muro
+    Seleccionar --> ColocarVentana: Tecla F / Botón
+    ColocarVentana --> Seleccionar: Clic en muro
+    Seleccionar --> ColocarRouter: Tecla R / Botón
+    ColocarRouter --> Seleccionar: Clic en plano
+  }
+
+  state SimulationLifecycle {
+    [*] --> Queued: Cambio de escena
+    Queued --> Running: Asignado a Worker
+    Running --> Done: Cálculo completado
+    Running --> Cancelled: Nueva escena (generationId desactualizado)
+    Running --> Failed: Error en Worker
+  }

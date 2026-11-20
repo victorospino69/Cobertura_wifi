@@ -1,0 +1,124 @@
+{
+  "walls": [
+    {
+      "id": "w_top",
+      "a": { "x": 0, "y": 0 },
+      "b": { "x": 10, "y": 0 },
+      "thickness": 0.2,
+      "materialId": "mat_concrete",
+      "kind": "wall"
+    },
+    {
+      "id": "w_right",
+      "a": { "x": 10, "y": 0 },
+      "b": { "x": 10, "y": 8 },
+      "thickness": 0.2,
+      "materialId": "mat_concrete",
+      "kind": "wall"
+    },
+    {
+      "id": "w_bottom",
+      "a": { "x": 10, "y": 8 },
+      "b": { "x": 0, "y": 8 },
+      "thickness": 0.2,
+      "materialId": "mat_concrete",
+      "kind": "wall"
+    },
+    {
+      "id": "w_left",
+      "a": { "x": 0, "y": 8 },
+      "b": { "x": 0, "y": 0 },
+      "thickness": 0.2,
+      "materialId": "mat_concrete",
+      "kind": "wall"
+    },
+    {
+      "id": "w_partition",
+      "a": { "x": 5, "y": 0 },
+      "b": { "x": 5, "y": 8 },
+      "thickness": 0.1,
+      "materialId": "mat_drywall",
+      "kind": "wall"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room_left",
+      "name": "Sala Principal",
+      "polygon": [
+        { "x": 0, "y": 0 },
+        { "x": 5, "y": 0 },
+        { "x": 5, "y": 8 },
+        { "x": 0, "y": 8 }
+      ]
+    },
+    {
+      "id": "room_right",
+      "name": "Oficina",
+      "polygon": [
+        { "x": 5, "y": 0 },
+        { "x": 10, "y": 0 },
+        { "x": 10, "y": 8 },
+        { "x": 5, "y": 8 }
+      ]
+    }
+  ],
+  "routers": [
+    {
+      "id": "router_1",
+      "name": "AP Sala",
+      "pos": { "x": 2.5, "y": 4.0 },
+      "txPowerDbm": 20,
+      "freqGHz": 2.4,
+      "gainDbi": 3
+    }
+  ],
+  "materials": [
+    {
+      "id": "mat_concrete",
+      "name": "Concreto",
+      "color": "#808080",
+      "props": [
+        {
+          "freqGHz": 2.4,
+          "epsR": 5.31,
+          "sigma": 0.066,
+          "attenuationDb": 12.5,
+          "reflection": 0.39,
+          "thicknessM": 0.2
+        },
+        {
+          "freqGHz": 5.0,
+          "epsR": 5.31,
+          "sigma": 0.066,
+          "attenuationDb": 17.5,
+          "reflection": 0.39,
+          "thicknessM": 0.2
+        }
+      ]
+    },
+    {
+      "id": "mat_drywall",
+      "name": "Panel de yeso",
+      "color": "#e5e0d8",
+      "props": [
+        {
+          "freqGHz": 2.4,
+          "epsR": 2.94,
+          "sigma": 0.023,
+          "attenuationDb": 2.5,
+          "reflection": 0.26,
+          "thicknessM": 0.024
+        },
+        {
+          "freqGHz": 5.0,
+          "epsR": 2.94,
+          "sigma": 0.023,
+          "attenuationDb": 4.0,
+          "reflection": 0.26,
+          "thicknessM": 0.024
+        }
+      ]
+    }
+  ]
+}

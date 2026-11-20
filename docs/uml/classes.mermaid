@@ -1,0 +1,84 @@
+classDiagram
+  class Scene {
+    +Wall[] walls
+    +Router[] routers
+    +Room[] rooms
+    +Material[] materials
+    +bounds() AABB
+  }
+  class Wall {
+    +string id
+    +Vec2 a
+    +Vec2 b
+    +number thickness
+    +string materialId
+    +WallKind kind
+    +string parentWallId
+  }
+  class Material {
+    +string id
+    +string name
+    +string color
+    +MaterialProps[] props
+    +freqProps(f) MaterialProps
+  }
+  class MaterialProps {
+    +number freqGHz
+    +number epsR
+    +number sigma
+    +number attenuationDb
+    +number reflection
+    +number thicknessM
+  }
+  class Router {
+    +string id
+    +string name
+    +Vec2 pos
+    +number txPowerDbm
+    +number freqGHz
+    +number gainDbi
+    +number channel
+    +number[] pattern
+  }
+  class SpatialIndex {
+    <<interface>>
+    +querySegment(p, q) Wall[]
+    +insert(wall) void
+  }
+  class QuadTree {
+    +AABB bounds
+    +insert(wall) void
+    +querySegment(p, q) Wall[]
+  }
+  class PropagationModel {
+    <<interface>>
+    +computeAt(router, rx) number
+  }
+  class RayTracer {
+    +trace(router, rx, opts) Path[]
+  }
+  class FresnelCalc {
+    +reflect(n1, n2, cosI) Coeff
+    +transmit(n1, n2, cosI) Coeff
+  }
+  class HeatmapGrid {
+    +Float32Array data
+    +number originX
+    +number originY
+    +number width
+    +number height
+    +number step
+  }
+  class SimulationEngine {
+    +run(scene, params) HeatmapGrid
+  }
+
+  Scene "1" o-- "*" Wall
+  Wall --> Material
+  Material "1" *-- "*" MaterialProps
+  SpatialIndex <|.. QuadTree
+  PropagationModel <|.. RayTracer
+  RayTracer --> SpatialIndex
+  RayTracer --> FresnelCalc
+  SimulationEngine --> PropagationModel
+  SimulationEngine --> HeatmapGrid

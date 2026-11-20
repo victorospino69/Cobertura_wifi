@@ -1,0 +1,26 @@
+flowchart TD
+  Start([Inicio de cálculo de celda RX]) --> DistCheck{Distancia d < d_min?}
+  DistCheck -- Sí --> ClampDist[Fijar d = d_min = 0.1 m]
+  DistCheck -- No --> KeepDist[Usar distancia real d]
+  
+  ClampDist --> FSPLCalc[Calcular FSPL: 20 log10 4*pi*d*f / c]
+  KeepDist --> FSPLCalc
+  
+  FSPLCalc --> QueryQT[Consultar QuadTree para muros en segmento TX->RX]
+  QueryQT --> FilterHits[Intersección rayo-segmento t in 0, len]
+  
+  FilterHits --> LoopWalls{¿Hay muros intersecados?}
+  LoopWalls -- Sí --> CalcAngle[Calcular ángulo de incidencia normal cos theta_i]
+  CalcAngle --> CalcSnell[Calcular cos theta_t mediante Ley de Snell]
+  CalcSnell --> CalcOblique[Longitud efectiva oblicua: espesor / cos theta_t]
+  CalcOblique --> AccumWallLoss[Acumular pérdida de penetración del muro en dB]
+  AccumWallLoss --> LoopWalls
+  
+  LoopWalls -- No --> CheckReflections{¿Reflexiones habilitadas?}
+  CheckReflections -- Sí --> ImageMethod[Método de imágenes: calcular caminos de rebote y coeficientes de Fresnel]
+  CheckReflections -- No --> Budget[Calcular presupuesto de enlace]
+  ImageMethod --> Budget
+  
+  Budget --> PowerSum[Convertir potencias individuales a mW lineal y acumular]
+  PowerSum --> ConvertDbm[Convertir potencia total acumulada a dBm]
+  ConvertDbm --> End([Guardar valor en celda Float32Array])

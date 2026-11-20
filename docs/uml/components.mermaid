@@ -1,0 +1,37 @@
+graph TB
+  subgraph Navegador [Cliente Web / Browser]
+    UI[React 18 + Vite]
+    Editor[Editor CAD Konva.js]
+    Zustand[Store Zustand + History]
+    HeatmapViewer[Visor Canvas 2D / WebGL]
+    WorkerPool[Pool Web Workers Comlink]
+    
+    UI --> Editor
+    UI --> Zustand
+    Editor --> Zustand
+    Zustand --> HeatmapViewer
+    Zustand --> WorkerPool
+    WorkerPool --> HeatmapViewer
+  end
+
+  subgraph Servidor [Backend NestJS]
+    API[REST API / OpenAPI]
+    Auth[Auth JWT]
+    Queue[BullMQ Processor]
+    
+    API --> Auth
+    API --> Queue
+  end
+
+  subgraph Almacenamiento [Persistencia & Cache]
+    DB[(PostgreSQL 16)]
+    Redis[(Redis)]
+    S3[(MinIO / S3 Storage)]
+  end
+
+  UI -->|HTTP / JSON| API
+  API --> DB
+  Queue --> Redis
+  Queue --> S3
+  WorkerPool -.->|Cálculo aislado| PhysicsCore["physics-core (TS puro)"]
+  Queue -.->|Jobs en batch| PhysicsCore

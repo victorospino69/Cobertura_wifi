@@ -1,0 +1,29 @@
+{
+  "name": "@wifi-planner/web",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@wifi-planner/shared-types": "workspace:*",
+    "@wifi-planner/geometry": "workspace:*",
+    "@wifi-planner/materials-db": "workspace:*",
+    "@wifi-planner/physics-core": "workspace:*",
+    "konva": "^9.3.18",
+    "react-konva": "^18.2.10",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^4.5.5",
+    "lucide-react": "^0.475.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.3",
+    "vite": "^5.4.14"
+  }
+}

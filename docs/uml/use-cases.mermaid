@@ -1,0 +1,22 @@
+flowchart TD
+  User((Usuario))
+  Admin((Administrador))
+
+  subgraph CasosDeUso [Casos de Uso del Sistema]
+    UC1[Dibujar plano arquitectónico 2D]
+    UC2[Asignar materiales a muros]
+    UC3[Colocar y configurar routers Wi-Fi]
+    UC4[Calcular simulación de cobertura y mapa de calor]
+    UC5[Comparar cobertura 2.4 GHz vs 5.0 GHz]
+    UC6[Exportar informe y mapas PDF/PNG/CSV]
+    UC7[Gestionar biblioteca de materiales del sistema]
+  end
+
+  User --> UC1
+  User --> UC2
+  User --> UC3
+  User --> UC4
+  User --> UC5
+  User --> UC6
+
+  Admin --> UC7

@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, victor]
+  pull_request:
+    branches: [main, master, victor]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 12
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile=false
+
+      - name: Run Physics Numerical Validation Tests (Gate de regresión física)
+        run: pnpm test
+
+      - name: Build Packages
+        run: pnpm build
+
+      - name: Test CLI Execution
+        run: pnpm sim:cli escena.json
